@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  
+  <ItemGroup>    
+    <Reference Include="YukkuriMovieMaker.Controls">
+      <HintPath>$(YMM4DirPath)YukkuriMovieMaker.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="YukkuriMovieMaker.Plugin">
+      <HintPath>$(YMM4DirPath)YukkuriMovieMaker.Plugin.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGen.Runtime">
+      <HintPath>$(YMM4DirPath)SharpGen.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGen.Runtime.COM">
+      <HintPath>$(YMM4DirPath)SharpGen.Runtime.COM.dll</HintPath>
+    </Reference>
+    <Reference Include="Vortice.Direct2D1">
+      <HintPath>$(YMM4DirPath)Vortice.Direct2D1.dll</HintPath>
+    </Reference>
+    <Reference Include="Vortice.DirectX">
+      <HintPath>$(YMM4DirPath)Vortice.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="Vortice.Mathematics">
+      <HintPath>$(YMM4DirPath)Vortice.Mathematics.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="Build">
+    <PropertyGroup>
+      <PluginDir>$(YMM4DirPath)user\plugin\$(MSBuildProjectName)</PluginDir>
+      <NativeDll>$(MSBuildProjectDirectory)\..\NesoraFuru\out\build\x64-release\NesoraFuruLib.dll</NativeDll>
+    </PropertyGroup>
+    <Copy SourceFiles="$(NativeDll)" DestinationFolder="$(PluginDir)\lib" SkipUnchangedFiles="true" Condition="Exists('$(NativeDll)')" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>
